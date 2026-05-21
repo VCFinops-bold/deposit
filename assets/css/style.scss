@@ -1,0 +1,18 @@
+---
+---
+// Importa la base del tema Leap Day
+@import "{{ site.theme }}";
+
+// --- AQUÍ PERSONALIZAS TUS COLORES ---
+
+// El color de fondo principal de la página (Por defecto es verde/azul)
+$body-background-color: #d2d4e1; // Ejemplo: Negro/Gris oscuro
+
+// El color del encabezado/banner de arriba
+$header-bg: #121e6c; // 
+
+// El color de los enlaces (links)
+$link-color: #121e6c; 
+
+// El color del texto principal
+$text-color: #ffffff;
