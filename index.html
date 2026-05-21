@@ -1,9 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Mi página en GitHub</title>
+    <meta charset="UTF-8">
+    <title>Visualizador de Histórico</title>
+    <style>
+        /* Estilos básicos para tu tabla */
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #3072b4; color: white; }
+    </style>
 </head>
 <body>
-    <h1>¡Hola Mundo! Mi sitio ya funciona.</h1>
+
+    <h1>Histórico de Datos</h1>
+    <p>La información a continuación se actualiza automáticamente desde Google Sheets.</p>
+
+    <table id="tabla-datos">
+        <thead>
+            <tr id="cabecera">
+                </tr>
+        </thead>
+        <tbody id="cuerpo-tabla">
+            </tbody>
+    </table>
+
+    <script>
+        // REEMPLAZA ESTA URL POR LA QUE TE DIO SHEET.BEST (apuntando a la hoja que quieras)
+        const urlAPI = "https://api.sheetbest.com/sheets/828dcd2c-1b9d-4eb0-842c-c5768802c4fe";
+
+        async function cargarDatos() {
+            try {
+                const respuesta = await fetch(urlAPI);
+                const datos = await respuesta.json();
+                
+                if(datos.length > 0) {
+                    // 1. Crear cabeceras basadas en las columnas de tu Sheets
+                    const columnas = Object.keys(datos[0]);
+                    const cabecera = document.getElementById('cabecera');
+                    columnas.forEach(col => {
+                        cabecera.innerHTML += `<th>${col}</th>`;
+                    });
+
+                    // 2. Llenar las filas con el histórico y los datos nuevos
+                    const cuerpo = document.getElementById('cuerpo-tabla');
+                    datos.forEach(fila => {
+                        let htmlFila = '<tr>';
+                        columnas.forEach(col => {
+                            htmlFila += `<td>${fila[col] || ''}</td>`;
+                        });
+                        htmlFila += '</tr>';
+                        cuerpo.innerHTML += htmlFila;
+                    });
+                }
+            } catch (error) {
+                console.error("Error cargando los datos:", error);
+            }
+        }
+
+        // Ejecutar la función al cargar la página
+        cargarDatos();
+    </script>
 </body>
 </html>
